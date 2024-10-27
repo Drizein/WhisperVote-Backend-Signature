@@ -1,0 +1,43 @@
+services:
+  maria-db-signature:
+    container_name: maria-db-signature
+    hostname: maria-db-signature
+    restart: unless-stopped
+    image: 'mariadb:latest'
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--connect" ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+    environment:
+      - 'MARIADB_DATABASE=WhisperVoteSignature'
+      - 'MARIADB_PASSWORD=SuperSicheresPasswort123!'
+      - 'MARIADB_ROOT_PASSWORD=SuperSicheresPasswort123!'
+      - 'MARIADB_USER=WhisperVote'
+    volumes:
+      - mariadb-signature-data:/var/lib/mysql
+    networks:
+      - shared
+
+  signature-backend:
+    container_name: signature
+    build:
+        context: .
+    restart: unless-stopped
+    environment:
+      - 'ConnectionStrings__AuthServer=http://auth:9912'
+      - 'ConnectionStrings__VoteServer=http://vote:9913'
+      - 'ASPNETCORE_HTTP_PORTS=9914'
+    ports:
+      - '9914:9914'
+    networks:
+      - shared
+    depends_on:
+      maria-db-signature:
+        condition: service_healthy
+
+networks:
+  shared:
+    external: true
+volumes:
+  mariadb-signature-data:
