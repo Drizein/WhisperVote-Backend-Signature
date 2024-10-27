@@ -28,6 +28,7 @@ modify the `docker-compose.yml` file to set the environment variables for the Ma
       - 'MARIADB_ROOT_PASSWORD=SuperSicheresPasswort123!'
       - 'MARIADB_USER=WhisperVote'
       - 'ConnectionStrings__AuthServer=http://auth:9912'
+      - 'ConnectionStrings__VoteServer=http://vote:9913'
       - 'ASPNETCORE_HTTP_PORTS=9914'
 ```
 
