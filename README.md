@@ -23,7 +23,7 @@ cd WhisperVote-Backend-Signature
 modify the `docker-compose.yml` file to set the environment variables for the MariaDB container and the .NET application.
 
 ```sh
-      - 'MARIADB_DATABASE=WhisperVoteVote'
+      - 'MARIADB_DATABASE=WhisperVoteSignature'
       - 'MARIADB_PASSWORD=SuperSicheresPasswort123!'
       - 'MARIADB_ROOT_PASSWORD=SuperSicheresPasswort123!'
       - 'MARIADB_USER=WhisperVote'
